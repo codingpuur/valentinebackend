@@ -13,8 +13,8 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: 'backend/config/config.env' });
 }
 app.use(cors({
-    origin: 'https://hilarious-paletas-3eb398.netlify.app',
-    allowedHeaders: ['Content-Type']
+    origin: '*'
+    
   }));
 app.use(express.json());
 app.use(cookieParser());
