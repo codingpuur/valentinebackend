@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: 'config/config.env' });
 }
 app.use(cors({ 
-    origin:"https://valentinesaga.com/"
+    origin:"https://valentinesaga.com/",
    credentials: true,
 Content-Type": "application/json"}));
 app.use(express.json());
