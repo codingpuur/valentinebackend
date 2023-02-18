@@ -12,7 +12,19 @@ const app = express();
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({ path: 'config/config.env' });
 }
-app.use(cors());
+const allowedOrigins = ['https://valentinesaga.com/'];
+const corsOptions = {
+  origin: function(origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
+// enable CORS for all routes
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
