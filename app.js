@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const errorMiddleware = require('./middlewares/error');
 const cors = require('cors');
+const helmet = require('helmet');
 
 const app = express();
 
