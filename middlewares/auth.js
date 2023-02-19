@@ -9,7 +9,7 @@ exports.isAuthenticatedUser = asyncErrorHandler(async (req, res, next) => {
       
 
     if (!token) {
-        next();
+        
         return next(new ErrorHandler("Please Login to Access", 401))
     }
 
