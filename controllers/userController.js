@@ -53,8 +53,28 @@ exports.loginUser = asyncErrorHandler(async (req, res, next) => {
     if(!isPasswordMatched) {
         return next(new ErrorHandler("Invalid Email or Password", 401));
     }
+    
+    if (user) {
+        res.json({
+            createdAt:user.createdAt,
+            name:user.name,
+            email:user.email,
+            gender:user.gender,
+            password:user.password,
+            token: generateToken(user._id),
+            resetPasswordExpire:user.resetPasswordExpire,
+            resetPasswordToken:user.resetPasswordToken,
+            role:user.role,
+            __v:user.__v,
+            _id:user._id,
+            avatar: {
+                public_id: user.public_id,
+                url: user.url,
+            },
+        });
+    }
 
-    sendToken(user, 201, res);
+//     sendToken(user, 201, res);
 });
 
 // Logout User
