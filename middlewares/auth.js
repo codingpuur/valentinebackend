@@ -5,9 +5,12 @@ const asyncErrorHandler = require('./asyncErrorHandler');
 
 exports.isAuthenticatedUser = asyncErrorHandler(async (req, res, next) => {
 
-    const  token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZThmMjU3MjM3YTc0OGEzYTJjYTgyNiIsImlhdCI6MTY3Njg2MjcyOSwiZXhwIjoxNjc3NDY3NTI5fQ.U7bqbldsR2K9F85msXfJ65nwIZcqGxpsqbyJwsb9wkQ"
-;
-      
+    const  token;
+      if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  )
+    token = req.headers.authorization.split(" ")[1];
 
     if (!token) {
         
