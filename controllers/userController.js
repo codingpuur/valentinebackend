@@ -4,21 +4,18 @@ const sendToken = require('../utils/sendToken');
 const ErrorHandler = require('../utils/errorHandler');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary');
 
 // Register User
 exports.registerUser = asyncErrorHandler(async (req, res, next) => {
 
-    const myCloud = await cloudinary.uploader.upload(req.body.avatar, {
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
         folder: "avatars",
         width: 150,
         crop: "scale",
     });
-    
 
-
-
-    const { name, email, gender, password,avatar } = req.body;
+    const { name, email, gender, password } = req.body;
 
     const user = await User.create({
         name, 
@@ -53,28 +50,8 @@ exports.loginUser = asyncErrorHandler(async (req, res, next) => {
     if(!isPasswordMatched) {
         return next(new ErrorHandler("Invalid Email or Password", 401));
     }
-    
-    if (user) {
-        res.json({
-            createdAt:user.createdAt,
-            name:user.name,
-            email:user.email,
-            gender:user.gender,
-            password:user.password,
-            token: generateToken(user._id),
-            resetPasswordExpire:user.resetPasswordExpire,
-            resetPasswordToken:user.resetPasswordToken,
-            role:user.role,
-            __v:user.__v,
-            _id:user._id,
-            avatar: {
-                public_id: user.public_id,
-                url: user.url,
-            },
-        });
-    }
 
-//     sendToken(user, 201, res);
+    sendToken(user, 201, res);
 });
 
 // Logout User
